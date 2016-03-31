@@ -30,3 +30,12 @@
 /app/assets/components/**/*.map.json
 /app/assets/components/**/*.js.map
 /app/assets/components/**/*.js.gz
+
+/app/assets/components/**/*.min.*
+/app/assets/components/**/.travis.yml
+/app/assets/components/**/.npmignore
+/app/assets/components/**/.github/
+/app/assets/components/**/*.md
+/app/assets/components/**/COPYING
+/app/assets/components/**/Makefile
+/app/assets/components/**/tests

@@ -1,4 +1,5 @@
 <!--
+@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -14,19 +15,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /**
    * `Polymer.NeonAnimationRunnerBehavior` adds a method to run animations.
-   * @polymerBehavior
+   *
+   * @polymerBehavior Polymer.NeonAnimationRunnerBehavior
    */
-  Polymer.NeonAnimationRunnerBehavior = [Polymer.NeonAnimatableBehavior, {
+  Polymer.NeonAnimationRunnerBehaviorImpl = {
 
     properties: {
 
-      _animationMeta: {
-        type: Object,
-        value: function() {
-          return new Polymer.IronMeta({type: 'animation'});
-        }
-      },
-
+      /** @type {?Object} */
       _player: {
         type: Object
       }
@@ -37,9 +33,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var allAnimations = [];
       if (allConfigs.length > 0) {
         for (var config, index = 0; config = allConfigs[index]; index++) {
-          var animationConstructor = this._animationMeta.byKey(config.name);
-          if (animationConstructor) {
-            var animation = animationConstructor && new animationConstructor();
+          var animation = document.createElement(config.name);
+          // is this element actually a neon animation?
+          if (animation.isNeonAnimation) {
             var effect = animation.configure(config);
             if (effect) {
               allAnimations.push({
@@ -57,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _runAnimationEffects: function(allEffects) {
-      return player = document.timeline.play(new GroupEffect(allEffects));
+      return document.timeline.play(new GroupEffect(allEffects));
     },
 
     _completeAnimations: function(allAnimations) {
@@ -68,6 +64,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /**
      * Plays an animation with an optional `type`.
+     * @param {string=} type
+     * @param {!Object=} cookie
      */
     playAnimation: function(type, cookie) {
       var allConfigs = this.getAnimationConfig(type);
@@ -105,6 +103,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._player.cancel();
       }
     }
+  };
 
-  }];
+  /** @polymerBehavior Polymer.NeonAnimationRunnerBehavior */
+  Polymer.NeonAnimationRunnerBehavior = [
+    Polymer.NeonAnimatableBehavior,
+    Polymer.NeonAnimationRunnerBehaviorImpl
+  ];
 </script>
