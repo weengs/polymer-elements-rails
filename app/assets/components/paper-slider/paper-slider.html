@@ -650,6 +650,9 @@ Custom property | Description | Default
         if (steps > maxMarkers) {
           steps = maxMarkers;
         }
+        if (steps < 0 || !isFinite(steps)) {
+          steps = 0;
+        }
         this._setMarkers(new Array(steps));
       },
 
@@ -681,6 +684,7 @@ Custom property | Description | Default
             this.increment();
           }
           this.fire('change');
+          event.preventDefault();
         }
       },
 
@@ -692,6 +696,7 @@ Custom property | Description | Default
             this.decrement();
           }
           this.fire('change');
+          event.preventDefault();
         }
       },
 
