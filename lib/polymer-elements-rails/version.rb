@@ -1,3 +1,3 @@
 module PolymerElementsRails
-  VERSION = "1.8.1"
+  VERSION = "1.10.1"
 end
